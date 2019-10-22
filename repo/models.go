@@ -7,8 +7,6 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-var repository *AccessRepo
-
 const (
 	dbUser   = "root"
 	dbPwd    = "Ro0T123456"
@@ -17,15 +15,18 @@ const (
 )
 
 var Db *gorm.DB
+var repository *AccessRepo
 
 type AccessRepo struct {
+	Rule
+	Role
+	Team
 }
 
 type Model interface {
-	Add() error
-	Delete() error
-	Modify() error
-	Get() error
+	Add(repo AccessRepo) error
+	Delete(repo AccessRepo) error
+	Update(info map[string]interface{}) error
 }
 
 func InitDB() (*gorm.DB, error) {
