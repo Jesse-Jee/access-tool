@@ -32,3 +32,11 @@ func (r *Role) Query() (*[]Role, error) {
 	db := Db.Find(&role)
 	return db.Value.(*[]Role), db.Error
 }
+
+func (r *Role) QueryOne(id int) (*Role, error) {
+	role := Role{}
+	if err := Db.First(&role, id).Error; err != nil {
+		return nil, err
+	}
+	return &role, nil
+}

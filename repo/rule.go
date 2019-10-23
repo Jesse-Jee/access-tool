@@ -34,3 +34,11 @@ func (r *Rule) Query() (*[]Rule, error) {
 	db := Db.Find(&rule)
 	return db.Value.(*[]Rule), db.Error
 }
+
+func (r *Rule) QueryOne(id int) (*Rule, error) {
+	rule := Rule{}
+	if err := Db.First(&rule, id).Error; err != nil {
+		return nil, err
+	}
+	return &rule, nil
+}
